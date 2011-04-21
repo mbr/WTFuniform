@@ -4,6 +4,10 @@
 import wtforms
 import widgets
 
+class BooleanField(wtforms.BooleanField):
+	widget = widgets.CheckboxInput()
+
+
 class DateField(wtforms.DateField):
 	widget = widgets.TextInput()
 
@@ -47,6 +51,9 @@ class SubmitField(wtforms.SubmitField):
 	def __init__(self, *args, **kwargs):
 		super(SubmitField, self).__init__(*args, **kwargs)
 		self.uniform_action = kwargs.get('uniform_action', 'primary')
+
+class TextAreaField(wtforms.TextAreaField):
+	widget = widgets.TextArea()
 
 
 class TextField(wtforms.TextField):

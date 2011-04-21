@@ -46,6 +46,14 @@ class BlockLabelsWidget(object):
 		return wtforms.widgets.HTMLString(u'\n'.join(html))
 
 
+class CheckboxInput(wtforms.widgets.CheckboxInput):
+	def __call__(self, field, **kwargs):
+		classes = _pop_classes(kwargs)
+		classes += get_validation_classes(field)
+		kwargs['class'] = ' '.join(classes)
+		return super(CheckboxInput, self).__call__(field, **kwargs)
+
+
 class FileInput(wtforms.widgets.FileInput):
     def __call__(self, field, **kwargs):
 		classes = _pop_classes(kwargs)
@@ -76,6 +84,14 @@ class SubmitInput(wtforms.widgets.SubmitInput):
     	classes.append(field.uniform_action + 'Action')
     	kwargs['class'] = ' '.join(classes)
         return super(SubmitInput, self).__call__(field, **kwargs)
+
+
+class TextArea(wtforms.widgets.TextArea):
+	def __call__(self, field, **kwargs):
+		classes = _pop_classes(kwargs)
+		classes += get_validation_classes(field)
+		kwargs['class'] = ' '.join(classes)
+		return super(TextArea, self).__call__(field, **kwargs)
 
 
 class TextInput(wtforms.widgets.TextInput):
