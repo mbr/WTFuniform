@@ -30,15 +30,6 @@ def get_validation_classes(field):
 	return c
 
 
-class FileInput(wtforms.widgets.FileInput):
-    def __call__(self, field, **kwargs):
-		classes = _pop_classes(kwargs)
-		classes.append('fileUpload')
-		classes += get_validation_classes(field)
-		kwargs['class'] = ' '.join(classes)
-		return super(FileInput, self).__call__(field, **kwargs)
-
-
 class BlockLabelsWidget(object):
 	def __call__(self, field, **kwargs):
 		kwargs.setdefault('id', field.id)
@@ -53,6 +44,15 @@ class BlockLabelsWidget(object):
 			html.append(u'<li>%s</li>' % (subfield()))
 		html.append(u'</ul>')
 		return wtforms.widgets.HTMLString(u'\n'.join(html))
+
+
+class FileInput(wtforms.widgets.FileInput):
+    def __call__(self, field, **kwargs):
+		classes = _pop_classes(kwargs)
+		classes.append('fileUpload')
+		classes += get_validation_classes(field)
+		kwargs['class'] = ' '.join(classes)
+		return super(FileInput, self).__call__(field, **kwargs)
 
 
 class PasswordInput(wtforms.widgets.PasswordInput):
