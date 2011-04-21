@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding=utf8
 
-from wtforms import *
-from wtforms.validators import Required, Email, NumberRange
 from wtfuniform import *
 import jinja2
 
@@ -29,9 +27,9 @@ class SampleForm(Form):
 
 	# check client-side validators
 	email = TextField('Email Test', [validators.Email()], description = 'This should report an error when an invalid address is put in.')
-	required_checkbox = BooleanField('Must check', [Required()], description = 'A checkbox that is required')
-	required_field = TextField('MustHave', [Required()], description = 'A required field.')
-	number = TextField('Some number', [NumberRange(-5, 20)], description = 'Must be between minus five and twenty')
+	required_checkbox = BooleanField('Must check', [validators.Required()], description = 'A checkbox that is required')
+	required_field = TextField('MustHave', [validators.Required()], description = 'A required field.')
+	number = TextField('Some number', [validators.NumberRange(-5, 20)], description = 'Must be between minus five and twenty')
 
 form = SampleForm()
 

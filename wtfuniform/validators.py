@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # coding=utf8
 
-from wtforms.validators import Email as WTFEmail
+import wtforms.validators
+from wtforms.validators import *
 
-class Email(WTFEmail):
+class Email(wtforms.validators.Email):
 	field_flags = ('valid_email',)

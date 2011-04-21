@@ -2,9 +2,7 @@
 # coding=utf8
 
 import wtforms.widgets
-
-__all__ = ['BlockLabelsWidget', 'FileInput', 'PasswordInput', 'RadioInput', 'SubmitInput', 'TextInput']
-
+from wtforms.widgets import *
 
 def _pop_classes(d):
 	return (d.pop('class', '') or d.pop('class_', '')).split()
