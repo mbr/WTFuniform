@@ -1,0 +1,86 @@
+{% macro render_field_uniform(field, hint) %}
+    <div class="ctrlHolder">
+      {{field.label}}
+      {{field(**kwargs)|safe}}
+      <p class="formHint">{{field.description}}</p>
+    </div>
+{% endmacro -%}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link href="uniform/css/uni-form.css" media="all" rel="stylesheet"/>
+<link href="uniform/css/default.uni-form.css" media="all" rel="stylesheet"/>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.js"></script>
+<script type="text/javascript" src="uniform/js/uni-form.jquery.js"></script>
+<script type="text/javascript" src="uniform/js/uni-form-validation.jquery.js"></script>
+
+<script type="text/javascript">
+$(function(){
+  $('form.uniForm').uniform();
+});
+</script>
+</script>
+</head>
+<body>
+
+<form action="#" class="uniForm">
+  <fieldset>
+  	{% for field in form %}
+  		FIELD: {{field}}
+  	{% endfor %}
+    <div class="ctrlHolder">
+      <label for="">Text input</label>
+      <input type="text" id="" name="" value="" size="35" class="textInput">
+      <p class="formHint">This is a form hint.</p>
+    </div>
+  
+    <div class="ctrlHolder">
+      <label for="">Textarea</label>
+      <textarea id="" name="" rows="25" cols="25"></textarea>
+      <p class="formHint">This is a form hint.</p>
+    </div>
+  
+    <div class="ctrlHolder">
+      <label for="">Select box</label>
+      <select id="" name="">
+        <option value="">Option</option>
+        <option value="">Option</option>
+        <option value="">Option</option>
+      </select>
+      <p class="formHint">This is a form hint.</p>
+    </div>
+  
+    <div class="ctrlHolder">
+      <p class="label">Checkboxes</p>
+      <ul class="blockLabels">
+        <li><label for=""><input type="checkbox" id="" name=""> Option</label></li>
+        <li><label for=""><input type="checkbox" id="" name=""> Option</label></li>
+        <li><label for=""><input type="checkbox" id="" name=""> Option</label></li>
+      </ul>
+      <p class="formHint">This is a form hint.</p>
+    </div>
+  
+    <div class="ctrlHolder">
+      <p class="label">Radio buttons</p>
+      <ul class="blockLabels">
+        <li><label for=""><input type="radio" id="" name=""> Option</label></li>
+        <li><label for=""><input type="radio" id="" name=""> Option</label></li>
+        <li><label for=""><input type="radio" id="" name=""> Option</label></li>
+      </ul>
+      <p class="formHint">This is a form hint.</p>
+    </div>
+  
+    <div class="ctrlHolder">
+      <label for="">File upload</label>
+      <input type="file" id="" name="" size="35" class="fileUpload">
+    </div>
+  
+    <div class="buttonHolder"><button type="submit" class="primaryAction">Submit</button></div>
+  </fieldset>
+</form>
+          
+
+</body>
+</html>
