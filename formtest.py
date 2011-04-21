@@ -3,7 +3,7 @@
 
 from wtforms import *
 from wtforms.validators import Required, Email, NumberRange
-#from wtfuniform import *
+from wtfuniform import *
 import jinja2
 
 env = jinja2.Environment(loader = jinja2.FileSystemLoader('templates'))
