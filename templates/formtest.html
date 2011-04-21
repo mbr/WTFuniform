@@ -9,15 +9,15 @@
 {% macro render_form_uniform(form, action = '.') %}
 <form action="{{action}}" class="uniForm">
   <fieldset>
-  	{%- for field in form %}
+  	{%- for field in form -%}
   		{% if not field.uniform_action %}{{render_field_uniform(field)}}{% endif %}
-  	{%- endfor -%}
+  	{%- endfor %}
     <div class="buttonHolder">
-  	{%- for field in form %}
+  	{%- for field in form -%}
   		{% if field.uniform_action %}
   		{{field()}}
-  		{% endif %}
-  	{%- endfor -%}
+  		{% endif -%}
+  	{% endfor %}
   </fieldset>
 </form>
 {% endmacro %}
