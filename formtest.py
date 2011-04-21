@@ -29,9 +29,9 @@ class SampleForm(Form):
 
 	# check client-side validators
 	email = TextField('Email Test', [validators.Email()], description = 'This should report an error when an invalid address is put in.')
-	#username_uniform = TextField('Different widget', default = 'def')
-	#a_required_field = TextField('MustHave', [Required()], default = 'def')
-	#number = TextField('Some number', [NumberRange(-5, 20)])
+	required_checkbox = BooleanField('Must check', [Required()], description = 'A checkbox that is required')
+	required_field = TextField('MustHave', [Required()], description = 'A required field.')
+	number = TextField('Some number', [NumberRange(-5, 20)], description = 'Must be between minus five and twenty')
 
 form = SampleForm()
 
