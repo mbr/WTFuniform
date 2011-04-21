@@ -3,7 +3,8 @@
 
 import wtforms.widgets
 
-__all__ = ['FileInput, PasswordInput, TextInput']
+__all__ = ['BlockLabelsWidget', 'FileInput', 'PasswordInput', 'RadioInput', 'SubmitInput', 'TextInput']
+
 
 def _pop_classes(d):
 	return (d.pop('class', '') or d.pop('class_', '')).split()
