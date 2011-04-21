@@ -55,7 +55,7 @@ class CheckboxInput(wtforms.widgets.CheckboxInput):
 
 
 class FileInput(wtforms.widgets.FileInput):
-    def __call__(self, field, **kwargs):
+	def __call__(self, field, **kwargs):
 		classes = _pop_classes(kwargs)
 		classes.append('fileUpload')
 		classes += get_validation_classes(field)
@@ -64,7 +64,7 @@ class FileInput(wtforms.widgets.FileInput):
 
 
 class PasswordInput(wtforms.widgets.PasswordInput):
-    def __call__(self, field, **kwargs):
+	def __call__(self, field, **kwargs):
 		classes = _pop_classes(kwargs)
 		classes.append('textInput')
 		classes += get_validation_classes(field)
@@ -73,17 +73,17 @@ class PasswordInput(wtforms.widgets.PasswordInput):
 
 
 class RadioInput(wtforms.widgets.RadioInput):
-    def __call__(self, field, **kwargs):
-        radio = super(RadioInput, self).__call__(field, **kwargs)
-        return wtforms.widgets.HTMLString(u'<label %s>%s %s</label>'  % (wtforms.widgets.html_params(for_ = field.id), radio, field.label.text))
+	def __call__(self, field, **kwargs):
+		radio = super(RadioInput, self).__call__(field, **kwargs)
+		return wtforms.widgets.HTMLString(u'<label %s>%s %s</label>'  % (wtforms.widgets.html_params(for_ = field.id), radio, field.label.text))
 
 
 class SubmitInput(wtforms.widgets.SubmitInput):
-    def __call__(self, field, **kwargs):
-    	classes = _pop_classes(kwargs)
-    	classes.append(field.uniform_action + 'Action')
-    	kwargs['class'] = ' '.join(classes)
-        return super(SubmitInput, self).__call__(field, **kwargs)
+	def __call__(self, field, **kwargs):
+		classes = _pop_classes(kwargs)
+		classes.append(field.uniform_action + 'Action')
+		kwargs['class'] = ' '.join(classes)
+		return super(SubmitInput, self).__call__(field, **kwargs)
 
 
 class TextArea(wtforms.widgets.TextArea):
@@ -95,9 +95,9 @@ class TextArea(wtforms.widgets.TextArea):
 
 
 class TextInput(wtforms.widgets.TextInput):
-    def __call__(self, field, **kwargs):
-    	classes = _pop_classes(kwargs)
-    	classes.append('textInput')
-    	classes += get_validation_classes(field)
-    	kwargs['class'] = ' '.join(classes)
-        return super(TextInput, self).__call__(field, **kwargs)
+	def __call__(self, field, **kwargs):
+		classes = _pop_classes(kwargs)
+		classes.append('textInput')
+		classes += get_validation_classes(field)
+		kwargs['class'] = ' '.join(classes)
+		return super(TextInput, self).__call__(field, **kwargs)
