@@ -28,7 +28,7 @@ class SampleForm(Form):
 	text_field = TextField('TextField', description = 'A TextField example')
 
 	# check client-side validators
-	#username = TextField('EMAIL', [Required(), Email()], default = 'def')
+	email = TextField('Email Test', [validators.Email()], description = 'This should report an error when an invalid address is put in.')
 	#username_uniform = TextField('Different widget', default = 'def')
 	#a_required_field = TextField('MustHave', [Required()], default = 'def')
 	#number = TextField('Some number', [NumberRange(-5, 20)])
