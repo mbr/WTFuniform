@@ -31,7 +31,8 @@ class RegexJavascriptMixin(object):
 
 
 class Email(wtforms.validators.Email, RegexJavascriptMixin):
-	pass
+	def __init__(self, message = 'Invalid email address.'):
+		super(Email, self).__init__(message)
 
 
 class Regexp(wtforms.validators.Regexp, RegexJavascriptMixin):
