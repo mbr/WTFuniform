@@ -10,10 +10,10 @@ def render_field(field, **kwargs):
     """ % (field.label, field(**kwargs), field.description)
 
 
-def render_form(form, action = '.'):
+def render_form(form, action = '.', use_inline = False):
 	chunks = [u"""<form action="%s" class="uniForm">
-  <fieldset>
-  	""" % (action,)]
+  <fieldset%s>
+  	""" % (action,' class="inlineLabels"' if use_inline else '')]
   	buttons = []
 
   	for field in form:
