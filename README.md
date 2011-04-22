@@ -7,6 +7,8 @@ The `wtfuniform` module extends many of the `wtforms` classes with the needed fu
 Example
 =======
 ``` python
+# note that the only difference from normal wtforms usage is importing
+# from a different module!
 from wtfuniform import TextField, PasswordField, SubmitField, Form, validators
 
 class LoginForm(Form):
