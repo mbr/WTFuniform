@@ -34,3 +34,13 @@ def render_form(form, action = '.', use_inline = False):
   """)
 
   	return u''.join(chunks)
+
+
+def render_validator_js(form):
+	js = []
+	for field in form:
+		for validator in field.validators:
+			if hasattr(validator, 'js_validator'):
+				js.append("window['%s'] = %s;" % (validator.js_validator_name(field), validator.js_validator(field)))
+
+	return '\n'.join(js);

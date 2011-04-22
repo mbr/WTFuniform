@@ -13,8 +13,6 @@ def get_validation_classes(field):
 
 	if field.flags.required:
 		c.append('required')
-	if field.flags.valid_email:
-		c.append('validateEmail')
 
 	# number range
 	for validator in field.validators:
@@ -24,6 +22,9 @@ def get_validation_classes(field):
 		if hasattr(validator, 'max'):
 			c.append('validateMax')
 			c.append('val-%d' % validator.max)
+		if hasattr(validator, 'js_validator'):
+			c.append('validateCallback')
+			c.append(validator.js_validator_name(field))
 
 	return c
 

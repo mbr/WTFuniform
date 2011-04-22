@@ -11,6 +11,8 @@
 <script type="text/javascript" src="uniform/js/uni-form-validation.jquery.js"></script>
 
 <script type="text/javascript">
+{{render_validator_js(form)}}
+
 $(function(){
   $('form.uniForm').uniform();
   $('.dateInput').datepicker();
