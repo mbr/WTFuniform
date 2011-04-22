@@ -49,7 +49,7 @@ class PasswordField(wtforms.fields.PasswordField):
 
 class RadioField(wtforms.fields.RadioField):
 	widget = widgets.BlockLabelsWidget()
-	option_widget = widgets.RadioInput()
+	option_widget = widgets.RadioLabeledInput()
 
 	def __init__(self, *args, **kwargs):
 		super(RadioField, self).__init__(*args, **kwargs)

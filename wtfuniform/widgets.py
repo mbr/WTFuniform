@@ -77,7 +77,7 @@ class PasswordInput(wtforms.widgets.PasswordInput):
 		return super(PasswordInput, self).__call__(field, **kwargs)
 
 
-class RadioInput(wtforms.widgets.RadioInput):
+class RadioLabeledInput(wtforms.widgets.RadioInput):
 	def __call__(self, field, **kwargs):
 		radio = super(RadioInput, self).__call__(field, **kwargs)
 		return wtforms.widgets.HTMLString(u'<label %s>%s %s</label>'  % (wtforms.widgets.html_params(for_ = field.id), radio, field.label.text))
