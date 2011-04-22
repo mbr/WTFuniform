@@ -20,11 +20,11 @@ class CheckMultipleField(wtforms.fields.SelectMultipleField):
 
 
 class DateField(wtforms.fields.DateField):
-	widget = widgets.TextInput()
+	widget = widgets.TextInput(uniform_extra_classes = ['dateInput'])
 
 
 class DateTimeField(wtforms.fields.DateTimeField):
-	widget = widgets.TextInput()
+	widget = widgets.TextInput(uniform_extra_classes = ['dateTimeInput'])
 
 
 class DecimalField(wtforms.fields.DecimalField):

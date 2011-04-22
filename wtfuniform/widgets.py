@@ -100,9 +100,13 @@ class TextArea(wtforms.widgets.TextArea):
 
 
 class TextInput(wtforms.widgets.TextInput):
+	def __init__(self, *args, **kwargs):
+		self.uniform_extra_classes = ['textInput'] + kwargs.pop('uniform_extra_classes', [])
+		super(TextInput, self).__init__(*args, **kwargs)
+
 	def __call__(self, field, **kwargs):
 		classes = _pop_classes(kwargs)
-		classes.append('textInput')
+		classes += self.uniform_extra_classes
 		classes += get_validation_classes(field)
 		kwargs['class'] = ' '.join(classes)
 		return super(TextInput, self).__call__(field, **kwargs)

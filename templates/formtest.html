@@ -4,13 +4,16 @@
 <title></title>
 <link href="uniform/css/uni-form.css" media="all" rel="stylesheet"/>
 <link href="uniform/css/default.uni-form.css" media="all" rel="stylesheet"/>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" medial="all" rel="stylesheet"/>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.js"></script>
 <script type="text/javascript" src="uniform/js/uni-form.jquery.js"></script>
 <script type="text/javascript" src="uniform/js/uni-form-validation.jquery.js"></script>
 
 <script type="text/javascript">
 $(function(){
   $('form.uniForm').uniform();
+  $('.dateInput').datepicker();
 });
 </script>
 

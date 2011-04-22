@@ -31,3 +31,9 @@ To properly work with uni-form, many of the WTForms widgets are extended with ex
 * All of the above is easily accessible by the `CheckMultipleField` for checkboxes. The default `RadioField` is already overriden to use these new widgets.
 * The `validators.Email` validator sets a `valid_email` flag. This is required for the widgets to be able to apply the correct CSS classes.
 * There is a helper module `wtfuniform.helper` that includes two functions for HTML code generation: `render_field` and `render_form`. For an example on how to use these with [jinja2](http://jinja.pocoo.org), see *formtest.html*.
+
+Extensions
+==========
+There are some extensions to the code that are not mandated by uni-form. These included:
+
+* `DateField` and `DateTimeField` have extra css classes of `dateInput` and `dateTimeInput`. This makes it easy to attach date selectors using javascript, e.g. by using jQuery.
