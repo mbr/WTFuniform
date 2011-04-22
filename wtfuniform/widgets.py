@@ -52,6 +52,13 @@ class CheckboxInput(wtforms.widgets.CheckboxInput):
 		return super(CheckboxInput, self).__call__(field, **kwargs)
 
 
+class CheckboxLabeledInput(CheckboxInput):
+	def __call__(self, field, **kwargs):
+		checkbox = super(CheckboxLabeledInput, self).__call__(field, **kwargs)
+
+		return wtforms.widgets.HTMLString(u'<label %s>%s %s</label>'  % (wtforms.widgets.html_params(for_ = field.id), checkbox, field.label.text))
+
+
 class FileInput(wtforms.widgets.FileInput):
 	def __call__(self, field, **kwargs):
 		classes = _pop_classes(kwargs)

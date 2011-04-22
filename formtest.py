@@ -31,6 +31,9 @@ class SampleForm(Form):
 	required_field = TextField('MustHave', [validators.Required()], description = 'A required field.')
 	number = TextField('Some number', [validators.NumberRange(-5, 20)], description = 'Must be between minus five and twenty')
 
+	# addtions
+	checkboxes = CheckMultipleField('Check multiple', description = 'A group of checkboxes.', choices = [('j', 'Choice J'), ('k', 'Choice K'), ('l', 'Choice L')])
+
 form = SampleForm()
 
 print tpl.render(form = form)

@@ -10,6 +10,15 @@ class BooleanField(wtforms.fields.BooleanField):
 	widget = widgets.CheckboxInput()
 
 
+class CheckMultipleField(wtforms.fields.SelectMultipleField):
+	widget = widgets.BlockLabelsWidget()
+	option_widget = widgets.CheckboxLabeledInput()
+
+	def __init__(self, *args, **kwargs):
+		super(CheckMultipleField, self).__init__(*args, **kwargs)
+		self.label = wtforms.fields.widgets.HTMLString(u'<p class="label">%s</p>' % self.label.text)
+
+
 class DateField(wtforms.fields.DateField):
 	widget = widgets.TextInput()
 
@@ -53,6 +62,7 @@ class SubmitField(wtforms.fields.SubmitField):
 	def __init__(self, *args, **kwargs):
 		super(SubmitField, self).__init__(*args, **kwargs)
 		self.uniform_action = kwargs.get('uniform_action', 'primary')
+
 
 class TextAreaField(wtforms.fields.TextAreaField):
 	widget = widgets.TextArea()
