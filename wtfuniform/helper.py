@@ -41,6 +41,6 @@ def render_validator_js(form):
 	for field in form:
 		for validator in field.validators:
 			if hasattr(validator, 'js_validator'):
-				js.append("window['%s'] = %s;" % (validator.js_validator_name(field), validator.js_validator(field)))
+				js.append("window['%s'] = %s;" % (validator.js_validator_name(field), validator.js_validator(form, field)))
 
 	return '\n'.join(js);
