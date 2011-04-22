@@ -10,10 +10,15 @@ def render_field(field, **kwargs):
     """ % (field.label, field(**kwargs), field.description)
 
 
-def render_form(form, action = '.', use_inline = False):
-	chunks = [u"""<form action="%s" class="uniForm">
+def render_form(form, action = '.', use_inline = False, prepend_validator_js = True):
+	chunks = []
+	if prepend_validator_js:
+		chunks.append('<script type="text/javascript">')
+		chunks.append(render_validator_js(form))
+		chunks.append('</script>')
+	chunks.append(u"""<form action="%s" class="uniForm">
   <fieldset%s>
-  	""" % (action,' class="inlineLabels"' if use_inline else '')]
+  	""" % (action,' class="inlineLabels"' if use_inline else ''))
   	buttons = []
 
   	for field in form:
