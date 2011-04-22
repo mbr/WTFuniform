@@ -35,6 +35,8 @@ class SampleForm(Form):
 	number = TextField('Some number', [validators.NumberRange(-5, 20)], description = 'Must be between minus five and twenty')
 	field_a = TextField('Field A')
 	field_b = TextField('Field B', [validators.EqualTo('field_a')], description = 'This field must be equal to Field A')
+	one_of = TextField('Number between "one" and "three"', [validators.AnyOf(['one','two','three'])], description = 'Enter a number, as a word, between one and three.')
+	none_of = TextField('Your favorite color, not black or white', [validators.NoneOf(['black','white'])], description = 'Enter any here, but "black" or "white"')
 
 	# additions
 	checkboxes = CheckMultipleField('Check multiple', description = 'A group of checkboxes.', choices = [('j', 'Choice J'), ('k', 'Choice K'), ('l', 'Choice L')])

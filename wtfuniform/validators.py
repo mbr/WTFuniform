@@ -51,5 +51,46 @@ class Email(wtforms.validators.Email, RegexJavascriptMixin):
 	js_message = 'Invalid email address.'
 
 
+class IPAddress(wtforms.validators.IPAddress, RegexJavascriptMixin):
+	js_message = 'Invalid IP address.'
+
+
+# length is handled natively by uni-form
+# number range is handled natively by uni-form as well
+# support for Optional is missing
+
+
+class URL(wtforms.validators.URL, RegexJavascriptMixin):
+	js_message = 'Invalid URL.'
+
+
+class AnyOf(wtforms.validators.AnyOf, JSValidatorMixin):
+	def js_validator(self, form, field):
+		msg = field.gettext(self.message or 'Invalid value, must be one of: %(values)s.') % {'values': self.values_formatter(self.values)}
+
+		return """function(field, caption) {
+			var validValues = %s;
+
+			if ($.inArray(field.val(), validValues) > -1 || field.val() == '') {
+				return true;
+			}
+			return %s;
+		}""" % (json.dumps(self.values), json.dumps(msg))
+
+
+class NoneOf(wtforms.validators.AnyOf, JSValidatorMixin):
+	def js_validator(self, form, field):
+		msg = field.gettext(self.message or 'Invalid value, can\'t be any of: %(values)s.') % {'values': self.values_formatter(self.values)}
+
+		return """function(field, caption) {
+			var validValues = %s;
+
+			if ($.inArray(field.val(), validValues) == -1 || field.val() == '') {
+				return true;
+			}
+			return %s;
+		}""" % (json.dumps(self.values), json.dumps(msg))
+
+
 class Regexp(wtforms.validators.Regexp, RegexJavascriptMixin):
 	pass
