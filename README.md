@@ -15,6 +15,10 @@ class LoginForm(Form):
 	username = TextField('Your username', [validators.Required()])
 	password = PasswordField('Your password', [validators.Required()])
 	login = SubmitField('Login')
+
+# optional, see below: render the form
+from wtfuniform.helper import render_form
+render_form(LoginForm())
 ```
 
 The module in detail
