@@ -2,9 +2,11 @@
 # coding=utf8
 
 from wtfuniform import *
+import wtfuniform.helper
 import jinja2
 
 env = jinja2.Environment(loader = jinja2.FileSystemLoader('templates'))
+env.globals['render_form'] = wtfuniform.helper.render_form
 
 tpl = env.get_template('formtest.html')
 

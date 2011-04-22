@@ -1,27 +1,3 @@
-{% macro render_field_uniform(field) %}
-    <div class="ctrlHolder">
-      {{field.label}}
-      {{field(**kwargs)|safe}}
-      <p class="formHint">{{field.description}}</p>
-    </div>
-{% endmacro -%}
-
-{% macro render_form_uniform(form, action = '.') %}
-<form action="{{action}}" class="uniForm">
-  <fieldset>
-  	{%- for field in form -%}
-  		{% if not field.uniform_action %}{{render_field_uniform(field)}}{% endif %}
-  	{%- endfor %}
-    <div class="buttonHolder">
-  	{%- for field in form -%}
-  		{% if field.uniform_action %}
-  		{{field()}}
-  		{% endif -%}
-  	{% endfor %}
-  </fieldset>
-</form>
-{% endmacro %}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,6 +14,6 @@ $(function(){
 });
 </script>
 
-{{render_form_uniform(form)}}
+{{render_form(form)}}
 </head>
 <body>
