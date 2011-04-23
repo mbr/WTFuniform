@@ -43,4 +43,7 @@ class SampleForm(Form):
 
 form = SampleForm()
 
+# get some errors in
+form.validate()
+
 print tpl.render(form = form)
