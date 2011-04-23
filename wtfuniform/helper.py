@@ -10,17 +10,20 @@ def render_field(field, **kwargs):
     """ % (field.label, field(**kwargs), field.description)
 
 
-def render_form(form, action = '.', use_inline = False, prepend_validator_js = True):
+def render_form(form, action = '.', headline = None, header_content = None, use_inline = False, prepend_validator_js = True, render_errors = 'top'):
 	chunks = []
 	if prepend_validator_js:
 		chunks.append('<script type="text/javascript">')
 		chunks.append(render_validator_js(form))
 		chunks.append('</script>')
-	chunks.append(u"""<form action="%s" class="uniForm">
-  <fieldset%s>
-  	""" % (action,' class="inlineLabels"' if use_inline else ''))
-  	buttons = []
 
+	chunks.append(u"""<form action="%s" class="uniForm">\n""" % (action,));
+	if headline or header_content:
+		chunks.append(render_header(headline, header_content))
+
+	chunks.append(u""" <fieldset%s>\n""" % ' class="inlineLabels"' if use_inline else '')
+
+  	buttons = []
   	for field in form:
   		if getattr(field,'uniform_action', False):
   			buttons.append(field())
@@ -39,6 +42,13 @@ def render_form(form, action = '.', use_inline = False, prepend_validator_js = T
   """)
 
   	return u''.join(chunks)
+
+
+def render_header(headline, content):
+	return u"""       <div class="header">
+        <h2>%s</h2>
+        <p>%s</p>
+      </div>""" % (headline, content)
 
 
 def render_validator_js(form):
