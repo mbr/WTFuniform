@@ -3,7 +3,7 @@
 
 def render_field(field, **kwargs):
 	if 'HiddenField' == field.type:
-		return field(**kwargs)
+		return field(**kwargs) + '\n'
 	return u"""<div class="ctrlHolder">
       %s
       %s
@@ -23,7 +23,7 @@ def render_form(form, action = '.', headline = None, header_content = None, use_
 	if headline or header_content:
 		chunks.append(render_header(headline, header_content))
 
-	chunks.append(u""" <fieldset%s>\n""" % ' class="inlineLabels"' if use_inline else '')
+	chunks.append(u""" <fieldset%s>\n""" % (' class="inlineLabels"' if use_inline else ''))
 
   	buttons = []
   	for field in form:
