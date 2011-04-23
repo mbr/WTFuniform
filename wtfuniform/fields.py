@@ -6,6 +6,11 @@ import widgets
 
 from wtforms.fields import *
 
+class PLabel(wtforms.fields.Label):
+	def __call__(self, text = None, **kwargs):
+		return wtforms.widgets.HTMLString(u'<p class="label">%s</label>' % (text or self.text))
+
+
 class BooleanField(wtforms.fields.BooleanField):
 	widget = widgets.CheckboxInput()
 
@@ -16,7 +21,7 @@ class CheckMultipleField(wtforms.fields.SelectMultipleField):
 
 	def __init__(self, *args, **kwargs):
 		super(CheckMultipleField, self).__init__(*args, **kwargs)
-		self.label = wtforms.fields.widgets.HTMLString(u'<p class="label">%s</p>' % self.label.text)
+		self.label = PLabel(self.id, kwargs.get('label', u'') or kwargs.get('_name', None).replace('_', ' ').title())
 
 
 class DateField(wtforms.fields.DateField):
@@ -53,7 +58,7 @@ class RadioField(wtforms.fields.RadioField):
 
 	def __init__(self, *args, **kwargs):
 		super(RadioField, self).__init__(*args, **kwargs)
-		self.label = wtforms.fields.widgets.HTMLString(u'<p class="label">%s</p>' % self.label.text)
+		self.label = PLabel(self.id, kwargs.get('label', u'') or kwargs.get('_name', None).replace('_', ' ').title())
 
 
 class SubmitField(wtforms.fields.SubmitField):
