@@ -28,7 +28,7 @@ def render_errors(errors, title = None):
 	return u'\n'.join(chunks)
 
 
-def render_form(form, action = '.', headline = None, header_content = None, use_inline = False, prepend_validator_js = True, errors = 'top', error_title = None):
+def render_form(form, action = '.', headline = None, header_content = None, use_inline = False, prepend_validator_js = True, errors = 'top', error_title = None, ok_message = None):
 	chunks = []
 	if prepend_validator_js:
 		chunks.append('<script type="text/javascript">')
@@ -47,6 +47,9 @@ def render_form(form, action = '.', headline = None, header_content = None, use_
 				#        but we need to prevent XSS from user input on GET requests.
 				error_msgs.append('<span class="errorFieldName">%s</span>: %s' % (cgi.escape(form[field_name].label.text), cgi.escape(error)))
 	chunks.append(render_errors(error_msgs, error_title))
+
+	if ok_message:
+		chunks.append(render_ok(ok_message))
 
 	chunks.append(u""" <fieldset%s>\n""" % (' class="inlineLabels"' if use_inline else ''))
 
@@ -76,6 +79,14 @@ def render_header(headline, content):
         <h2>%s</h2>
         <p>%s</p>
       </div>""" % (headline, content)
+
+
+def render_ok(message):
+	return u"""      <div id="okMsg">
+        <p>
+          %s
+        </p>
+      </div>""" % (message,)
 
 
 def render_validator_js(form):
