@@ -8,12 +8,12 @@ from fields import FieldSet
 def render_field(field, **kwargs):
 	if 'HiddenField' == field.type:
 		return field(**kwargs) + '\n'
-	return u"""<div class="ctrlHolder">
+	return u"""<div class="ctrlHolder%s">
       %s
       %s
       <p class="formHint">%s</p>
     </div>
-    """ % (field.label, field(**kwargs), field.description)
+    """ % (' error' if field.errors else '', field.label, field(**kwargs), field.description)
 
 
 def render_fieldset_end(fieldset):
@@ -81,7 +81,7 @@ def render_form(form, action = '.', headline = None, header_content = None, prep
   			if not current_fieldset:
   				current_fieldset = FieldSet()
   				chunks.append(render_fieldset_start(current_fieldset))
-  			chunks.append(render_field(field))
+  			chunks.append(render_field(field, class_ = 'error' if True else None))
 
 	chunks.append(u"""
     <div class="buttonHolder">
