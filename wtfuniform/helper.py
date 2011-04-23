@@ -13,7 +13,11 @@ def render_field(field, **kwargs):
       %s
       <p class="formHint">%s</p>
     </div>
-    """ % (' error' if field.errors else '', field.label, field(**kwargs), field.description)
+    """ % (' error' if field.errors else '',
+           field.label('<em>*</em> %s' % field.label.text if field.flags.required else None),
+           field(**kwargs),
+           field.description
+          )
 
 
 def render_fieldset_end(fieldset):
