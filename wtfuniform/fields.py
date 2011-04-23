@@ -8,7 +8,7 @@ from wtforms.fields import *
 
 class PLabel(wtforms.fields.Label):
 	def __call__(self, text = None, **kwargs):
-		return wtforms.widgets.HTMLString(u'<p class="label">%s</label>' % (text or self.text))
+		return wtforms.widgets.HTMLString(u'<p class="label">%s</p>' % (text or self.text))
 
 
 class BooleanField(wtforms.fields.BooleanField):
