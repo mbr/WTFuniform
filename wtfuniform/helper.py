@@ -2,6 +2,8 @@
 # coding=utf8
 
 def render_field(field, **kwargs):
+	if 'HiddenField' == field.type:
+		return field(**kwargs)
 	return u"""<div class="ctrlHolder">
       %s
       %s
