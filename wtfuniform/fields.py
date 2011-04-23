@@ -6,6 +6,16 @@ import widgets
 
 from wtforms.fields import *
 
+# FIXME: This is a hackish solution, but do we really
+#        want to monkey patch the metaclass just for this?
+class FieldSet(wtforms.fields.Field):
+	widget = lambda _1,_2: ''
+
+	def __init__(self, title = None, inline = False, **kwargs):
+		super(FieldSet, self).__init__(title, **kwargs)
+		self.is_inline = inline
+
+
 class PLabel(wtforms.fields.Label):
 	def __call__(self, text = None, **kwargs):
 		return wtforms.widgets.HTMLString(u'<p class="label">%s</p>' % (text or self.text))

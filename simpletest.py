@@ -12,12 +12,15 @@ env.globals['render_validator_js'] = wtfuniform.helper.render_validator_js
 tpl = env.get_template('formtest.html')
 
 class SampleForm(Form):
+	sect1 = FieldSet('The first few fields')
 	boolean_field = BooleanField('BooleanField', description = 'A BooleanField example')
 	date_field = DateField('DateField', description = 'A DateField example')
 	date_time_field = DateTimeField('DateTimeField', description = 'A DateTimeField example')
 	decimal_field = DecimalField('DecimalField', description = 'A DecimalField example')
 	file_field = FileField('FileField', description = 'A FileField example')
 	float_field = FloatField('FloatField', description = 'A FloatField example')
+
+	sect2 = FieldSet('Some more fields, displayed inline', inline = True)
 	hidden_field = HiddenField('HiddenField', description = 'A HiddenField example')
 	integer_field = IntegerField('IntegerField', description = 'A IntegerField example')
 	password_field  = PasswordField('PasswordField', description = 'A PasswordField example')
@@ -25,10 +28,13 @@ class SampleForm(Form):
 	select_field = SelectField('SelectField', description = 'A SelectField example', choices = [('d', 'Choice D'), ('e', 'Choice E'), ('f', 'Choice F')])
 	select_multiple_field = SelectMultipleField('SelectMultipleField', description = 'A SelectMultipleField example', choices = [('g', 'Choice G'), ('h', 'Choice H'), ('i', 'Choice I')])
 	submit_field = SubmitField('SubmitField', description = 'A SubmitField example')
+
+	sect3 = FieldSet('Back to non-inline')
 	text_area_field = TextAreaField('TextAreaField', description = 'A TextAreaField example')
 	text_field = TextField('TextField', description = 'A TextField example')
 
 	# check client-side validators
+	sect4 = FieldSet('More complex things')
 	email = TextField('Email Test', [validators.Email()], description = 'This should report an error when an invalid address is put in.')
 	required_checkbox = BooleanField('Must check', [validators.Required()], description = 'A checkbox that is required')
 	required_field = TextField('MustHave', [validators.Required()], description = 'A required field.')

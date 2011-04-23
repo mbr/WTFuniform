@@ -3,6 +3,8 @@
 
 import cgi
 
+from fields import FieldSet
+
 def render_field(field, **kwargs):
 	if 'HiddenField' == field.type:
 		return field(**kwargs) + '\n'
@@ -12,6 +14,19 @@ def render_field(field, **kwargs):
       <p class="formHint">%s</p>
     </div>
     """ % (field.label, field(**kwargs), field.description)
+
+
+def render_fieldset_end(fieldset):
+  	return u'   </fieldset>'
+
+
+def render_fieldset_start(fieldset):
+  	chunks = []
+  	chunks.append(u'   <fieldset%s>' % (' class="inlineLabels"' if getattr(fieldset, 'is_inline', None) else ''))
+  	if getattr(fieldset, 'label', None):
+  		chunks.append(u'\n      <h3>%s</h3>' % fieldset.label.text)
+
+  	return ''.join(chunks)
 
 
 def render_errors(errors, title = None):
@@ -28,7 +43,7 @@ def render_errors(errors, title = None):
 	return u'\n'.join(chunks)
 
 
-def render_form(form, action = '.', headline = None, header_content = None, use_inline = False, prepend_validator_js = True, errors = 'top', error_title = None, ok_message = None):
+def render_form(form, action = '.', headline = None, header_content = None, prepend_validator_js = True, errors = 'top', error_title = None, ok_message = None):
 	chunks = []
 	if prepend_validator_js:
 		chunks.append('<script type="text/javascript">')
@@ -51,13 +66,21 @@ def render_form(form, action = '.', headline = None, header_content = None, use_
 	if ok_message:
 		chunks.append(render_ok(ok_message))
 
-	chunks.append(u""" <fieldset%s>\n""" % (' class="inlineLabels"' if use_inline else ''))
+	current_fieldset = None
 
   	buttons = []
   	for field in form:
   		if getattr(field,'uniform_action', False):
   			buttons.append(field())
+  		elif 'FieldSet' == field.type:
+  			if current_fieldset:
+  				chunks.append(render_fieldset_end(current_fieldset))
+  			current_fieldset = field
+  			chunks.append(render_fieldset_start(current_fieldset))
   		else:
+  			if not current_fieldset:
+  				current_fieldset = FieldSet()
+  				chunks.append(render_fieldset_start(current_fieldset))
   			chunks.append(render_field(field))
 
 	chunks.append(u"""
@@ -66,10 +89,8 @@ def render_form(form, action = '.', headline = None, header_content = None, use_
     </div>
 	""" % (u''.join(buttons)))
 
-	chunks.append(u"""
-  </fieldset>
-</form>
-  """)
+  	if current_fieldset: chunks.append(render_fieldset_end(current_fieldset))
+	chunks.append(u""" </form>""")
 
   	return u''.join(chunks)
 
