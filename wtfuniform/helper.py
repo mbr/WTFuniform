@@ -85,7 +85,10 @@ def render_form(form, action = '.', headline = None, header_content = None, prep
   			if not current_fieldset:
   				current_fieldset = FieldSet()
   				chunks.append(render_fieldset_start(current_fieldset))
-  			chunks.append(render_field(field, class_ = 'error' if True else None))
+  			if field.errors:
+  				chunks.append(render_field(field, class_ = 'error'))
+  			else:
+  				chunks.append(render_field(field))
 
 	chunks.append(u"""
     <div class="buttonHolder">
