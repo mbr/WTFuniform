@@ -8,16 +8,28 @@ from fields import FieldSet
 def render_field(field, **kwargs):
 	if 'HiddenField' == field.type:
 		return field(**kwargs) + '\n'
-	return u"""<div class="ctrlHolder%s">
-      %s
-      %s
-      <p class="formHint">%s</p>
-    </div>
-    """ % (' error' if field.errors else '',
-           field.label('<em>*</em> %s' % field.label.text if field.flags.required else None),
-           field(**kwargs),
-           field.description
-          )
+	elif 'BooleanField' == field.type:
+		divclasses = 'ctrlHolder noLabel'
+		if field.errors: divclasses += ' error'
+		label_with_widget = field.label('%s %s' % (field(**kwargs), field.label.text))
+		return u"""<div class="%s">
+			<ul>
+				<li>%s</li>
+			</ul>
+			<p class="formHint">%s</p>
+		</div>""" % (divclasses, label_with_widget, field.description)
+	else:
+		divclasses = 'ctrlHolder'
+		label = field.label('<em>*</em> %s' % field.label.text if field.flags.required else None)
+
+		if field.errors: divclasses += ' error'
+
+		return u"""<div class="%s">
+		  %s
+		  %s
+		  <p class="formHint">%s</p>
+		</div>
+		""" % (divclasses, label, field(**kwargs), field.description)
 
 
 def render_fieldset_end(fieldset):
