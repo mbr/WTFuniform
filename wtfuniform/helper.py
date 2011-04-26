@@ -13,8 +13,9 @@ class FormRenderer(object):
 	for tpl_name in env.list_templates(['html']):
 		templates[tpl_name[:-5]] = env.get_template(tpl_name)
 
-	def __init__(self, form):
+	def __init__(self, form, mark_required = True):
 	    self.form = form
+	    self.mark_required = mark_required
 
 	def _render(self, tpl, **kwargs):
 		return self.templates[tpl].render(**kwargs)
@@ -26,8 +27,8 @@ class FormRenderer(object):
 		if 'HiddenField' == field.type:
 			return field(**kwargs) + '\n'
 		elif 'BooleanField' == field.type:
-			return self._render('boolean_field', field = field, kwargs = kwargs)
-		return self._render('field', field = field, kwargs = kwargs)
+			return self._render('boolean_field', field = field, kwargs = kwargs, mark_required = self.mark_required)
+		return self._render('field', field = field, kwargs = kwargs, mark_required = self.mark_required)
 
 	def render_fieldset(self, fieldset = None, rendered_fields = []):
 		if not fieldset:

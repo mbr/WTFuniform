@@ -1,5 +1,5 @@
     <div class="ctrlHolder{% if field.errors %} error{% endif %}">
-    	{% if field.flags.required -%}
+    	{% if field.flags.required and mark_required -%}
     		{{field.label('<em>*</em>' + field.label.text)}}
     	{%- else %}
     		{{field.label}}
