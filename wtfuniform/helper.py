@@ -13,6 +13,9 @@ class FormRenderer(object):
 	for tpl_name in env.list_templates(['html']):
 		templates[tpl_name[:-5]] = env.get_template(tpl_name)
 
+	def __init__(self, form):
+	    self.form = form
+
 	def _render(self, tpl, **kwargs):
 		return self.templates[tpl].render(**kwargs)
 
@@ -31,18 +34,15 @@ class FormRenderer(object):
 			return self._render('fieldset', rendered_fields = rendered_fields, label = None, inline = False)
 		return self._render('fieldset', rendered_fields = rendered_fields, label = fieldset.label.text, inline = fieldset.is_inline)
 
-	def render_form(self, form, action = '.', headline = None, header_content = None, prepend_validator_js = True, error_title = None, ok_message = None, enctype = None):
-		validator_js = None
-
-		if prepend_validator_js:
-			validator_js = self.render_validator_js(form)
+	def render_form(self, action = '.', headline = None, header_content = None, prepend_validator_js = True, error_title = None, ok_message = None, enctype = None):
+		validator_js = self.render_validator_js() if prepend_validator_js else None
 
 		current_fieldset = None
 		current_rendered_fields = []
 		fieldsets = []
 		buttons = []
 
-		for field in form:
+		for field in self.form:
 			if getattr(field,'uniform_action', False):
 				buttons.append(field())
 			elif 'FieldSet' == field.type:
@@ -55,7 +55,7 @@ class FormRenderer(object):
 		fieldsets.append(self.render_fieldset(current_fieldset, current_rendered_fields))
 
 		return self._render('form', action = action,
-		                            form = form,
+		                            form = self.form,
 		                            headline = headline,
 		                            header_content = header_content,
 		                            fieldsets = fieldsets,
@@ -65,11 +65,11 @@ class FormRenderer(object):
 		                            error_title = error_title,
 		                            ok_message = ok_message)
 
-	def render_validator_js(self, form):
+	def render_validator_js(self):
 		js = []
-		for field in form:
+		for field in self.form:
 			for validator in field.validators:
 				if hasattr(validator, 'js_validator'):
-					js.append("window['%s'] = %s;" % (validator.js_validator_name(field), validator.js_validator(form, field)))
+					js.append("window['%s'] = %s;" % (validator.js_validator_name(field), validator.js_validator(self.form, field)))
 
 		return '\n'.join(js);
