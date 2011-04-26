@@ -1,0 +1,9 @@
+    <div class="ctrlHolder{% if field.errors %} error{% endif %}">
+    	{% if field.flags.required -%}
+    		{{field.label('<em>*</em>' + field.label.text)}}
+    	{%- else %}
+    		{{field.label}}
+    	{%- endif %}
+    	{{field(**kwargs)}}
+		<p class="formHint">{{field.description}}</p>
+    </div>

@@ -1,0 +1,46 @@
+{% if validator_js %}
+<script type="text/javascript">
+{{validator_js|safe}}
+</script>
+{% endif -%}
+<form action="{{action}}" class="uniForm"{% if enctype %} enctype="{{enctype}}"{% endif %}>
+{%- if headline or header_content %}
+    <div class="header">
+    	{%- if headline %}
+        <h2>{{headline}}</h2>
+        {%- endif %}
+        {%- if header_content %}
+        <p>{{header_content}}</p>
+        {%- endif %}
+    </div>
+{%- endif %}
+{%- if form.errors %}
+    <div id="errorMsg">
+     {%- if error_title %}
+        <h3>{{error_title}}</h3>
+     {%- endif %}
+        <ol>
+    {%- for field_name, field_errors in form.errors.iteritems() %}
+        {%- for error in field_errors %}
+            <li><span class="errorFieldName">{{form[field_name].label.text|e}}</span>: {{error|e}}</li>
+         {%- endfor %}    
+    {%- endfor %}
+        </ol>
+    </div>
+{%- endif %}
+{%- if ok_message %}
+    <div id="okMsg">
+        <p>{{ok_message}}</p>
+    </div>
+{%- endif %}
+{%- for rendered_fieldset in fieldsets %}
+{{rendered_fieldset}}
+{%- endfor %}
+{% if buttons %}
+    <div class="buttonHolder">
+{%- for button in buttons %}
+        {{button}}
+{%- endfor %}
+    </div>
+{%- endif %}
+</form>

@@ -1,0 +1,8 @@
+   <fieldset{% if inline %} class="inlineLabels"{% endif %}>
+   {%- if label %}
+       <h3>{{label}}</h3>
+   {%- endif %}
+   {%- for f in rendered_fields -%}
+   {{f}}
+   {%- endfor %}
+   </fieldset>

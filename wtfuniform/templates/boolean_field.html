@@ -1,0 +1,6 @@
+    <div class="ctrlHolder noLabel{% if field.errors %} error{% endif %}">
+        <ul>
+    		<li>{{field.label('%s %s' % (field(**kwargs), field.label.text))}}</li>
+        </ul>
+		<p class="formHint">{{field.description}}</p>
+    </div>

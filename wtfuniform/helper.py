@@ -5,134 +5,65 @@ import cgi
 
 from fields import FieldSet
 
+import jinja2
+
 class FormRenderer(object):
+	env = jinja2.Environment(loader = jinja2.PackageLoader(__name__))
+	templates = {}
+	for tpl_name in env.list_templates(['html']):
+		templates[tpl_name[:-5]] = env.get_template(tpl_name)
+
+	def _render(self, tpl, **kwargs):
+		return self.templates[tpl].render(**kwargs)
+
 	def render_errors(self, errors, title = None):
-		chunks = []
-		chunks.append(u'     <div id="errorMsg">')
-		if title: chunks.append(u'        <h3>%s</h3>' % title)
-		chunks.append(u'       <ol>')
-		for error in errors:
-			chunks.append(u'          <li>%s</li>' % (error,))
-
-		chunks.append(u'       </ol>')
-		chunks.append(u'      </div>')
-
-		return u'\n'.join(chunks)
-
+		return self._render('form_errors', errors = errors, title = title)
 
 	def render_field(self, field, **kwargs):
 		if 'HiddenField' == field.type:
 			return field(**kwargs) + '\n'
 		elif 'BooleanField' == field.type:
-			divclasses = 'ctrlHolder noLabel'
-			if field.errors: divclasses += ' error'
-			label_with_widget = field.label('%s %s' % (field(**kwargs), field.label.text))
-			return u"""<div class="%s">
-				<ul>
-					<li>%s</li>
-				</ul>
-				<p class="formHint">%s</p>
-			</div>""" % (divclasses, label_with_widget, field.description)
-		else:
-			divclasses = 'ctrlHolder'
-			label = field.label('<em>*</em> %s' % field.label.text if field.flags.required else None)
+			return self._render('boolean_field', field = field, kwargs = kwargs)
+		return self._render('field', field = field, kwargs = kwargs)
 
-			if field.errors: divclasses += ' error'
+	def render_fieldset(self, fieldset = None, rendered_fields = []):
+		if not fieldset:
+			return self._render('fieldset', rendered_fields = rendered_fields, label = None, inline = False)
+		return self._render('fieldset', rendered_fields = rendered_fields, label = fieldset.label.text, inline = fieldset.is_inline)
 
-			return u"""<div class="%s">
-			  %s
-			  %s
-			  <p class="formHint">%s</p>
-			</div>
-			""" % (divclasses, label, field(**kwargs), field.description)
+	def render_form(self, form, action = '.', headline = None, header_content = None, prepend_validator_js = True, error_title = None, ok_message = None, enctype = None):
+		validator_js = None
 
-
-	def render_fieldset_end(self, fieldset):
-		return u'   </fieldset>'
-
-
-	def render_form(self, form, action = '.', headline = None, header_content = None, prepend_validator_js = True, errors = 'top', error_title = None, ok_message = None):
-		chunks = []
 		if prepend_validator_js:
-			chunks.append('<script type="text/javascript">')
-			chunks.append(self.render_validator_js(form))
-			chunks.append('</script>')
-
-		chunks.append(u"""<form action="%s" class="uniForm">\n""" % (action,));
-		if headline or header_content:
-			chunks.append(self.render_header(headline, header_content))
-
-		error_msgs = []
-		if 'top' == errors and form.errors:
-			for field_name, field_errors in form.errors.iteritems():
-				for error in field_errors:
-					# FIXME: This makes it impossible to use HTML in error messages,
-					#        but we need to prevent XSS from user input on GET requests.
-					error_msgs.append('<span class="errorFieldName">%s</span>: %s' % (cgi.escape(form[field_name].label.text), cgi.escape(error)))
-		chunks.append(self.render_errors(error_msgs, error_title))
-
-		if ok_message:
-			chunks.append(self.render_ok(ok_message))
+			validator_js = self.render_validator_js(form)
 
 		current_fieldset = None
-
+		current_rendered_fields = []
+		fieldsets = []
 		buttons = []
+
 		for field in form:
 			if getattr(field,'uniform_action', False):
 				buttons.append(field())
 			elif 'FieldSet' == field.type:
-				if current_fieldset:
-					chunks.append(self.render_fieldset_end(current_fieldset))
+				if current_fieldset or current_rendered_fields:
+					fieldsets.append(self.render_fieldset(current_fieldset, current_rendered_fields))
 				current_fieldset = field
-				chunks.append(self.render_fieldset_start(current_fieldset))
+				current_rendered_fields = []
 			else:
-				if not current_fieldset:
-					current_fieldset = FieldSet()
-					chunks.append(self.render_fieldset_start(current_fieldset))
-				if field.errors:
-					chunks.append(self.render_field(field, class_ = 'error'))
-				else:
-					chunks.append(self.render_field(field))
+				current_rendered_fields.append(self.render_field(field))
+		fieldsets.append(self.render_fieldset(current_fieldset, current_rendered_fields))
 
-		chunks.append(u"""
-		<div class="buttonHolder">
-			%s
-		</div>
-		""" % (u''.join(buttons)))
-
-		if current_fieldset: chunks.append(self.render_fieldset_end(current_fieldset))
-		chunks.append(u""" </form>""")
-
-		return u''.join(chunks)
-
-
-	def render_ok(self, message):
-		return u"""      <div id="okMsg">
-			<p>
-			  %s
-			</p>
-		  </div>""" % (message,)
-
-
-	def render_fieldset_start(self, fieldset):
-		chunks = []
-		chunks.append(u'   <fieldset%s>' % (' class="inlineLabels"' if getattr(fieldset, 'is_inline', None) else ''))
-		if getattr(fieldset, 'label', None):
-			chunks.append(u'\n      <h3>%s</h3>' % fieldset.label.text)
-
-		return ''.join(chunks)
-
-
-
-
-	def render_header(self, headline, content):
-		return u"""       <div class="header">
-			<h2>%s</h2>
-			<p>%s</p>
-		  </div>""" % (headline, content)
-
-
-
+		return self._render('form', action = action,
+		                            form = form,
+		                            headline = headline,
+		                            header_content = header_content,
+		                            fieldsets = fieldsets,
+		                            buttons = buttons,
+		                            enctype = enctype,
+		                            validator_js = validator_js,
+		                            error_title = error_title,
+		                            ok_message = ok_message)
 
 	def render_validator_js(self, form):
 		js = []
