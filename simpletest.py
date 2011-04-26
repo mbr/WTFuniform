@@ -11,6 +11,13 @@ env.globals['render_validator_js'] = wtfuniform.helper.render_validator_js
 
 tpl = env.get_template('formtest.html')
 
+# straight from the wtforms docs
+class TelephoneForm(Form):
+	country_code = IntegerField('Country Code', [validators.required()])
+	area_code = IntegerField('Area Code/Exchange', [validators.required()])
+	number = TextField('Number')
+
+
 class SampleForm(Form):
 	sect1 = FieldSet('The first few fields')
 	boolean_field = BooleanField('BooleanField', description = 'A BooleanField example')
@@ -46,6 +53,9 @@ class SampleForm(Form):
 
 	# additions
 	checkboxes = CheckMultipleField('Check multiple', description = 'A group of checkboxes.', choices = [('j', 'Choice J'), ('k', 'Choice K'), ('l', 'Choice L')])
+
+	sect3 = FieldSet('Nested inputs')
+	telephone_field = FormField(TelephoneForm, description = 'A nested Form')
 
 form = SampleForm()
 

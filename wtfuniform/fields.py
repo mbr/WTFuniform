@@ -50,6 +50,10 @@ class FileField(wtforms.fields.FileField):
 	widget = widgets.FileInput()
 
 
+class FormField(wtforms.fields.FormField):
+	widget = widgets.UnorderedListWidget()
+
+
 class FloatField(wtforms.fields.FloatField):
 	widget = widgets.TextInput()
 

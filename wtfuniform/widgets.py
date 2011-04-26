@@ -69,6 +69,25 @@ class FileInput(wtforms.widgets.FileInput):
 		return super(FileInput, self).__call__(field, **kwargs)
 
 
+class UnorderedListWidget(wtforms.widgets.ListWidget):
+	def __init__(self, alternate = False):
+		self.alternate = True
+
+	def __call__(self, field, **kwargs):
+		kwargs.setdefault('id', field.id)
+
+		classes = _pop_classes(kwargs)
+		kwargs['class'] = ' '.join(classes)
+
+		html = [u'<ul %s>' % (wtforms.widgets.html_params(**kwargs))]
+		for subfield in field:
+			s = subfield.label('%s %s' % (subfield.label.text, subfield(**kwargs)))
+			html.append(u'<li>%s</li>' % (s))
+		html.append(u'</ul>')
+		return wtforms.widgets.HTMLString(u'\n'.join(html))
+
+
+
 class PasswordInput(wtforms.widgets.PasswordInput):
 	def __call__(self, field, **kwargs):
 		classes = _pop_classes(kwargs)
