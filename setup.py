@@ -10,5 +10,6 @@ setup(name='WTFuniform',
       author_email='git@marcbrinkmann.de',
       url='http://github.com/mbr/',
       packages=['wtfuniform'],
+      package_data = {'wtfuniform': ['templates/*']},
       install_requires=['wtforms', 'jinja2>=2.4'],
      )
