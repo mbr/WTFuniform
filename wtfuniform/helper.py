@@ -13,9 +13,11 @@ class FormRenderer(object):
 	for tpl_name in env.list_templates(['html']):
 		templates[tpl_name[:-5]] = env.get_template(tpl_name)
 
-	def __init__(self, form, mark_required = True):
+	def __init__(self, form, action = '.', method = 'post', mark_required = True):
 	    self.form = form
 	    self.mark_required = mark_required
+	    self.method = method
+	    self.action = action
 
 	def _render(self, tpl, **kwargs):
 		return self.templates[tpl].render(**kwargs)
@@ -35,7 +37,7 @@ class FormRenderer(object):
 			return self._render('fieldset', rendered_fields = rendered_fields, label = None, inline = False)
 		return self._render('fieldset', rendered_fields = rendered_fields, label = fieldset.label.text, inline = fieldset.is_inline)
 
-	def render_form(self, action = '.', headline = None, header_content = None, prepend_validator_js = True, error_title = None, ok_message = None, enctype = None):
+	def render_form(self, headline = None, header_content = None, prepend_validator_js = True, error_title = None, ok_message = None, enctype = None):
 		validator_js = self.render_validator_js() if prepend_validator_js else None
 
 		current_fieldset = None
@@ -55,7 +57,8 @@ class FormRenderer(object):
 				current_rendered_fields.append(self.render_field(field))
 		fieldsets.append(self.render_fieldset(current_fieldset, current_rendered_fields))
 
-		return self._render('form', action = action,
+		return self._render('form', action = self.action,
+		                            method = self.method,
 		                            form = self.form,
 		                            headline = headline,
 		                            header_content = header_content,

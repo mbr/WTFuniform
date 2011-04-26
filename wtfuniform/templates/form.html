@@ -3,7 +3,7 @@
 {{validator_js|safe}}
 </script>
 {% endif -%}
-<form action="{{action}}" class="uniForm"{% if enctype %} enctype="{{enctype}}"{% endif %}>
+<form action="{{action}}" method="{{method}}" class="uniForm"{% if enctype %} enctype="{{enctype}}"{% endif %}>
 {%- if headline or header_content %}
     <div class="header">
     	{%- if headline %}
