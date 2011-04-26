@@ -6,8 +6,7 @@ import wtfuniform.helper
 import jinja2
 
 env = jinja2.Environment(loader = jinja2.FileSystemLoader('templates'))
-env.globals['render_form'] = wtfuniform.helper.render_form
-env.globals['render_validator_js'] = wtfuniform.helper.render_validator_js
+env.globals['renderer'] = wtfuniform.helper.FormRenderer()
 
 tpl = env.get_template('formtest.html')
 
