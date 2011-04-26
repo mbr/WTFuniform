@@ -31,8 +31,6 @@ def get_validation_classes(field):
 
 class BlockLabelsWidget(object):
 	def __call__(self, field, **kwargs):
-		kwargs.setdefault('id', field.id)
-
 		classes = _pop_classes(kwargs)
 		classes.append('blockLabels')
 		kwargs['class'] = ' '.join(classes)
@@ -74,8 +72,6 @@ class UnorderedListWidget(wtforms.widgets.ListWidget):
 		self.alternate = True
 
 	def __call__(self, field, **kwargs):
-		kwargs.setdefault('id', field.id)
-
 		classes = _pop_classes(kwargs)
 		kwargs['class'] = ' '.join(classes)
 
