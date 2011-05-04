@@ -1,0 +1,192 @@
+bgcolor = #dde8ec
+textcolor = #000000
+weaktextcolor = #777777
+weaktextfocusedcolor = #333333
+sepcolor = #efefef
+focuscolor = #6da2b5 
+
+// buttons
+holdercolor = $sepcolor
+primaryaction_bgcolor = #59a200
+primaryaction_fgcolor = #ffffff
+primaryaction_bdrcolor = $primaryaction_bgcolor.darken(20)
+primaryaction_shdcolor = $primaryaction_bgcolor.brighten(50)
+
+// should be "background color compatible"
+// "error" message box
+error_bgcolor_strong = #f6bec1
+error_bgcolor_weak = #ffdfdF
+error_textcolor = $textcolor
+
+// fields with bad input
+efield_text = $error_textcolor
+efield_bg = $error_bgcolor_weak
+efield_input_bg = $error_bgcolor_weak
+efield_input_fg = $error_textcolor + #880000
+
+// "okay" message box
+ok_bgcolor = #579f00 
+ok_fgcolor = #eeeeee
+
+// fairly generic values
+input_border = #bebebe 
+input_bg = #ffffff
+
+.uniForm:
+  background: $bgcolor
+  color: $textcolor
+
+  legend:
+    font-size: 100%
+    font-weight: bold
+    margin: 0
+    padding: 1.5em 0
+
+  .ctrlHolder:
+    border-bottom: 1px solid $sepcolor
+    padding: 1em
+
+  .ctrlHolder.focused:
+    background: $focuscolor
+
+  .buttonHolder:
+    background: $holdercolor
+    margin: 1.5em 0 0 0
+    padding: 1.5em
+    text-align: right
+
+    .primaryAction:
+      background: $primaryaction_bgcolor
+      border: 1px solid $primaryaction_bdrcolor
+      box-shadow: 1px 1px 0 $primaryaction_shdcolor
+      color: #fff
+      font-size: 12px
+      font-weight: bold
+      line-height: 1
+      moz-box-shadow: 1px 1px 0 $primaryaction_shdcolor
+      padding: 10px 22px
+      text-shadow: -1px -1px 0 rgba(0,0,0,.25)
+      webkit-box-shadow: 1px 1px 0 #d5e2e7
+
+    .primaryAction:active:
+      position: relative
+      top: 1px
+
+  .secondaryAction:
+    text-align: left
+
+  button.secondaryAction:
+    background: transparent
+    border: none
+    color: $weaktextcolor
+    margin: 1.25em 0 0 0
+    padding: 0
+
+  label small:
+    color: $weaktextcolor
+    font-size: .75em
+
+  .textInput, textarea:
+    background: $input_bg
+    border: 1px solid $input_border
+    padding: 4px 2px
+
+  textarea:
+    height: 12em
+  .inlineLabels:
+    label em:
+      font-style: normal
+      font-weight: bold
+    .formHint:
+      padding-top: .5em
+
+  .inlineLabels .ctrlHolder ul li, .uniForm .ctrlHolder ul.blockLabels li:
+    margin-bottom: .3em
+    margin-top: .3em
+
+  .ctrlHolder:
+    ul li label:
+      font-size: .85em
+
+    .textInput:focus, textarea:focus:
+      outline: none
+
+  .formHint:
+    color: $weaktextcolor
+    font-size: .85em
+
+  .ctrlHolder.focused .formHint:
+    color: $weaktextfocusedcolor
+
+  #errorMsg:
+    background: $error_bgcolor_weak
+    box-shadow: 0 0 14px rgba(0,0,0,.25)
+    color: $error_textcolor
+    margin: 0 0 1.5em 0
+    moz-box-shadow: 0 0 14px rgba(0,0,0,.25)
+    padding: 1px 1.5em
+    webkit-box-shadow: 0 0 14px rgba(0,0,0,.25)
+
+    ol:
+      margin: 0 0 1.5em 0
+      padding: 0
+
+      li:
+        background: $error_bgcolor_strong
+        font-size: .85em
+        margin: 0 0 3px 1.5em
+        padding: 7px
+        position: relative
+
+  .ctrlHolder.error, .ctrlHolder.focused.error:
+    color: $efield_text
+    background-color: $efield_bg
+
+    input.error, select.error, textarea.error:
+      border-color: $efield_input_fg
+      background: $efield_input_bg
+      color: $efield_input_fg
+
+  #okMsg:
+    background: $ok_bgcolor
+    box-shadow: 0 0 14px rgba(0,0,0,.25)
+    color: $ok_fgcolor
+    margin: 0 0 1.5em 0
+    moz-box-shadow: 0 0 14px rgba(0,0,0,.25)
+    padding: 1px 1.5em
+    text-align: center
+    text-shadow: 1px 1px 0 rgba(255,255,255,.25)
+    webkit-box-shadow: 0 0 14px rgba(0,0,0,.25)
+
+    p:
+      margin: 0
+
+  // columns inside okay message
+  .col:
+    margin-bottom: 1.5em
+
+  .col.first:
+    clear: none
+    float: left
+    width: 49%
+
+  .col.last:
+    clear: none
+    float: right
+    margin-right: 0
+    width: 49%
+
+  // rounded corners
+  #okMsg, #errorMsg, #errorMsg ol li, .buttonHolder, .buttonHolder .primaryAction, .ctrlHolder.error, .ctrlHolder.focused.error:
+    border-radius: 4px
+    khtml-border-radius: 4px
+    moz-border-radius: 4px
+    o-border-radius: 4px
+    webkit-border-radius: 4px
+
+  .textInput, textarea:
+    border-radius: 3px
+    khtml-border-radius: 3px
+    moz-border-radius: 3px
+    o-border-radius: 3px
+    webkit-border-radius: 3px
