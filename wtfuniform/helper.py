@@ -74,7 +74,7 @@ class FormRenderer(object):
 	def render_init_js(self):
 	    return u"""<script type="text/javascript">$(document).ready"""\
 	           u"""(function(){ if (! window._wtforms_uniform_initialized) {
-	           $('form.uniform').uniForm(); window._wtforms_uniform_initialized =
+	           $('form.uniForm').uniform(); window._wtforms_uniform_initialized =
 	           true; }});</script>"""
 
 	def render_validator_js(self):
