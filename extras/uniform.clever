@@ -1,36 +1,41 @@
-bgcolor = #dde8ec
-textcolor = #000000
-weaktextcolor = #777777
-weaktextfocusedcolor = #333333
-sepcolor = #efefef
-focuscolor = #6da2b5 
+site_bg = #202020
+site_text_col = #e3dec1
+site_block_bg = #232323
+
+bgcolor = $site_block_bg
+textcolor = $site_text_col
+weaktextcolor = $bgcolor.brighten(60)
+weaktextfocusedcolor = $weaktextcolor.brighten(10)
+sepcolor = $bgcolor.brighten(20)
+focuscolor = $bgcolor.brighten(15)
 
 // buttons
-holdercolor = $sepcolor
-primaryaction_bgcolor = #59a200
+holdercolor = $bgcolor
+primaryaction_bgcolor = #855821
 primaryaction_fgcolor = #ffffff
-primaryaction_bdrcolor = $primaryaction_bgcolor.darken(20)
-primaryaction_shdcolor = $primaryaction_bgcolor.brighten(50)
+primaryaction_bdrcolor = $primaryaction_bgcolor.brighten(30)
+primaryaction_shdcolor = $primaryaction_bgcolor.darken(20)
 
 // should be "background color compatible"
 // "error" message box
-error_bgcolor_strong = #f6bec1
-error_bgcolor_weak = #ffdfdF
+error_bgcolor_weak = $bgcolor.brighten(10) + #550000
+error_bgcolor_strong = $error_bgcolor_weak.brighten(8)
 error_textcolor = $textcolor
 
 // fields with bad input
 efield_text = $error_textcolor
 efield_bg = $error_bgcolor_weak
-efield_input_bg = $error_bgcolor_weak
-efield_input_fg = $error_textcolor + #880000
 
 // "okay" message box
-ok_bgcolor = #579f00 
+ok_bgcolor = $bgcolor.brighten(10) + #225500
 ok_fgcolor = #eeeeee
 
 // fairly generic values
-input_border = #bebebe 
-input_bg = #ffffff
+input_bg = #eeeeee
+input_fg = black
+
+efield_input_bg = $input_bg + #220000
+efield_input_fg = $input_fg
 
 .uniForm:
   background: $bgcolor
@@ -88,7 +93,8 @@ input_bg = #ffffff
 
   .textInput, textarea:
     background: $input_bg
-    border: 1px solid $input_border
+    color: $input_fg
+    border: 1px solid $input_fg
     padding: 4px 2px
 
   textarea:
@@ -177,7 +183,7 @@ input_bg = #ffffff
     width: 49%
 
   // rounded corners
-  #okMsg, #errorMsg, #errorMsg ol li, .buttonHolder, .buttonHolder .primaryAction, .ctrlHolder.error, .ctrlHolder.focused.error:
+  #okMsg, #errorMsg, #errorMsg ol li, .buttonHolder, .buttonHolder .primaryAction:
     border-radius: 4px
     khtml-border-radius: 4px
     moz-border-radius: 4px
