@@ -37,8 +37,9 @@ class FormRenderer(object):
 			return self._render('fieldset', rendered_fields = rendered_fields, label = None, inline = False)
 		return self._render('fieldset', rendered_fields = rendered_fields, label = fieldset.label.text, inline = fieldset.is_inline)
 
-	def render_form(self, headline = None, header_content = None, prepend_validator_js = True, error_title = None, ok_message = None, enctype = None):
+	def render_form(self, headline = None, header_content = None, prepend_validator_js = True, js_auto_init = True, error_title = None, ok_message = None, enctype = None):
 		validator_js = self.render_validator_js() if prepend_validator_js else None
+		js_auto_init = self.render_init_js() if js_auto_init else None
 
 		current_fieldset = None
 		current_rendered_fields = []
@@ -66,8 +67,15 @@ class FormRenderer(object):
 		                            buttons = buttons,
 		                            enctype = enctype,
 		                            validator_js = validator_js,
+		                            js_auto_init = js_auto_init,
 		                            error_title = error_title,
 		                            ok_message = ok_message)
+
+	def render_init_js(self):
+	    return u"""<script type="text/javascript">$(document).ready"""\
+	           u"""(function(){ if not(window._wtforms_uniform_initialized) {
+	           $('form.%s').uniForm(); window._wtforms_uniform_initialized =
+	           true; }});</script>"""
 
 	def render_validator_js(self):
 		js = []
