@@ -30,7 +30,7 @@ To properly work with uni-form, many of the WTForms widgets are extended with ex
 * `BlockLabelsWidget` is a widget that functions almost like a `ListWidget`, but omits the labels. It is used in conjunction with `RadioLabeledInput` and `CheckboxLabeledInput` to produce the proper multi checkbox/radio inputs used in uni-form.
 * All of the above is easily accessible by the `CheckMultipleField` for checkboxes. The default `RadioField` is already overriden to use these new widgets.
 * All of the validators are extended with javascript functionality and will perform the same check client-side first, alerting the user of his mistake before he clicked submit.
-* There is a helper module `wtfuniform.helper` that includes two functions for HTML code generation: `render_field` and `render_form`. For an example on how to use these with [jinja2](http://jinja.pocoo.org), see *formtest.html*.
+* There is a helper module `wtfuniform.helper` that includes two functions for HTML code generation: `render_field` and `render_form`. For an example on how to use these with [jinja2](http://jinja.pocoo.org), see *formtest.html* and *simpletest.py*.
 
 Extensions
 ==========
