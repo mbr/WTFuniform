@@ -38,8 +38,17 @@ class FormRenderer(object):
 		return self._render('fieldset', rendered_fields = rendered_fields, label = fieldset.label.text, inline = fieldset.is_inline)
 
 	def render_form(self, headline = None, header_content = None, prepend_validator_js = True, js_auto_init = True, error_title = None, ok_message = None, enctype = None):
+		# enctype: None is auto, add if FileField present
+		#          False means no change
 		validator_js = self.render_validator_js() if prepend_validator_js else None
 		js_auto_init = self.render_init_js() if js_auto_init else None
+
+		method = self.method
+		if None == enctype:
+			for field in self.form:
+				if field.type == 'FileField':
+					enctype = 'multipart/form-data'
+					method = 'post'
 
 		current_fieldset = None
 		current_rendered_fields = []
@@ -59,7 +68,7 @@ class FormRenderer(object):
 		fieldsets.append(self.render_fieldset(current_fieldset, current_rendered_fields))
 
 		return self._render('form', action = self.action,
-		                            method = self.method,
+		                            method = method,
 		                            form = self.form,
 		                            headline = headline,
 		                            header_content = header_content,
